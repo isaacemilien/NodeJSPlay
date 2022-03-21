@@ -10,7 +10,6 @@ router.get("/", (req, res) => {
 
 // response to 'create' form action
 router.post("/", (req, res) => {
-
     // Check if username alread exists in database, by seeing if users with the corresponding details can be selected
     con.query(`SELECT * FROM tblStudents WHERE username = "${req.body.username}"`, (err, queryResult)=>{
     
@@ -24,7 +23,8 @@ router.post("/", (req, res) => {
 
             // problem was that the password length needs to be 60 chars long in database table
             if(bcrypt.compareSync(req.body.password, hashedPassword)){
-                res.send("logged in as " + req.body.username)
+                req.session.currentUserId = queryResult[0].StudentId;
+                res.redirect("update");
             }
             else{
                 res.send("incorrect details")

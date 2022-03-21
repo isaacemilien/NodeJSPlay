@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-
 var con = require("../database/connect");
-const { format } = require("../database/connect");
-const res = require("express/lib/response");
-
-var saltRounds = 10;
 
 router.get("/", (req, res) => {
     res.render("register");
@@ -24,13 +19,13 @@ router.post("/", (req, res) => {
         if(queryResult.length === 0){
             
             // Salt and hash password
-            bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+            bcrypt.hash(req.body.password, 10, function(err, hash) {
 
                 // Create account using details
                 con.query(`INSERT INTO tblStudents(Username, Password) VALUES("${req.body.username}", "${hash}")`, (err)=>{
                     if(err) return err;
                 });
-                res.send("Account successfully created");
+                res.redirect("update");
             });
         }
         else{
