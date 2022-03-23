@@ -3,8 +3,14 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 
 var con = require("../database/connect")
+var currentSocketId;
 
 router.get("/", (req, res) => {
+    const io = req.app.get("socketio")
+    io.on("connection", (socket) => {
+        currentSocketId = socket.id;
+    })
+    
     res.render("login");
 });
 
@@ -23,8 +29,15 @@ router.post("/", (req, res) => {
 
             // problem was that the password length needs to be 60 chars long in database table
             if(bcrypt.compareSync(req.body.password, hashedPassword)){
+                // Get user socket id
+
+
+                // Save socket id to session
+                req.session.currentSocketId = currentSocketId;
+
+                // Save user id to session
                 req.session.currentUserId = queryResult[0].StudentId;
-                res.redirect("update");
+                res.redirect("dashboard");
             }
             else{
                 res.send("incorrect details")

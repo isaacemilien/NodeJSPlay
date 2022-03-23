@@ -5,8 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script defer src="/js/clientSocket.js"></script>
 </head>
 <body>
     <h1>This is the home page</h1>
+
+    <form action="" id="form">
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form><br>
+    <button onclick="window.location.href='Login'">
+        Login
+    </button><br><br>
+    <button onclick="window.location.href='register'">
+        Create account
+    </button>
 </body>
 </html>

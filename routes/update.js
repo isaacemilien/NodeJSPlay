@@ -3,14 +3,18 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 
 var con = require("../database/connect");
-const { format } = require("../database/connect");
-const res = require("express/lib/response");
 
 router.get("/", (req, res) => {
-    res.render("update");
+    // Check if user logged in
+    if(req.session.currentUserId > 0){
+        res.render("update");
+    }
+    else{
+        res.send("Area locked");
+    }
 });
 
-router.post("/updateShit", (req, res) => {
+router.post("/", (req, res) => {
     // get information from req
     const username = req.body.username
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -18,6 +22,17 @@ router.post("/updateShit", (req, res) => {
     // update in database
     con.query(`UPDATE tblStudents SET Username = ${con.escape(username)}, Password = ${con.escape(hashedPassword)} WHERE StudentId = ${req.session.currentUserId}`, (err, queryResult) => {
         if(err) throw err;
+    });
+});
+
+// Delete account
+router.post("/delete", (req, res) => {
+    // Deletion query
+    con.query(`DELETE FROM tblstudents WHERE StudentId = ${req.session.currentUserId}`, (err, queryResult) => {
+        if(err) throw err;
+
+        console.log("Account successfully deleted");
+        res.render("register");
     });
 });
 

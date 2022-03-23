@@ -25,6 +25,7 @@ router.post("/", (req, res) => {
                 con.query(`INSERT INTO tblStudents(Username, Password) VALUES("${req.body.username}", "${hash}")`, (err)=>{
                     if(err) return err;
                 });
+
                 res.redirect("update");
             });
         }
