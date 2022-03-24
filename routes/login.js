@@ -35,6 +35,9 @@ router.post("/", (req, res) => {
                 // Save socket id to session
                 req.session.currentSocketId = currentSocketId;
 
+                // Save current user id to server
+                req.app.locals.currentUserId = queryResult[0].StudentId;
+
                 // Save user id to session
                 req.session.currentUserId = queryResult[0].StudentId;
                 res.redirect("dashboard");

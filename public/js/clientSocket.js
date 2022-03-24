@@ -1,17 +1,12 @@
+// Create io instance, do not connect to server immediatly, this will be done when user logs in
 var socket = io();
 
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+// Connects socket
+function connectThisBitch(){
+    socket.connect();
+}
 
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  if (input.value) {
-    console.log(input.value);
-    socket.emit('chat message', input.value);
-    input.value = '';
-  }
-});
-
-socket.on("msg", (arg) => {
-  console.log(arg); // world
+// Listen for connection event
+socket.on("connect", () => {
+    console.log("Is this forced");
 });

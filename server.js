@@ -3,8 +3,12 @@ const app = express();
 const bodyparser = require("body-parser");
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
+
+// Create node server
 const http = require("http");
 const server = http.createServer(app);
+
+// Create socket server and bind to node server
 const {Server} = require("socket.io");
 const io = new Server(server);
 
@@ -27,25 +31,34 @@ app.use("/login",  loginRouter);
 app.use("/update", updateRouter);
 app.use("/dashboard", dashboardRouter);
 
-// // Log their id when they join
-// io.on("connection", (socket) => {
-//   console.log(socket.id);
+app.locals.users = {};
 
-//   socket.on("disconnect", (socket) => {
-//     console.log("bye bitch");
-//   })
-// });
+// Listen for socket events
+io.on("connection", (socket) => {
+    console.log("Socket connect: ", socket.id);
 
-// // Get message
-// io.on('connection', (socket) => {
-//   socket.on('chat message', (msg) => {
-//     console.log(socket.id + ' : ' + msg);
-//   });
-// });
+    // Check if user is logged in
+    if(app.locals.currentUserId > 0){
+        console.log("user is logged in at the moment");
 
-// // Emit event to all connected clients
-// io.on("connection", (socket) => {
-//   socket.emit("msg", "world");
-// });
+        // Save current socket id
+        app.locals.currentSocketId = socket.id;
+
+        // Bind and save current user id and socket id
+        app.locals.users[app.locals.currentSocketId] = app.locals.currentUserId;
+
+        console.log(app.locals.users);
+    }
+
+    // Disconnect socket
+    socket.on("disconnect", () => {
+        console.log("bye, ", socket.id);
+
+        delete app.locals.users[socket.id];
+
+        console.log(app.locals.users);  
+    });
+
+});
 
 server.listen(3000);
