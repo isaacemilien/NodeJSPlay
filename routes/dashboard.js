@@ -6,7 +6,7 @@ var con = require("../database/connect");
 router.get("/", (req, res) => {
     // Check if user logged in
     if(req.session.currentUserId > 0){
-        res.render("dashboard");
+        res.render("dashboard", {userz : req.app.locals.users});
     }
     else{
         res.send("Area locked");
