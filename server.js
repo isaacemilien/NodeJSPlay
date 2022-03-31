@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const {sessionMiddleware, wrap} = require("./sessionMiddleware");
 // const session = require("express-session");
 const cookieParser = require('cookie-parser');
+app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'))
 
 // Create node server
 const http = require("http");
@@ -12,7 +13,6 @@ const server = http.createServer(app);
 // Create socket server and bind to node server
 const {Server} = require("socket.io");
 const io = new Server(server);
-
 
 // Use session
 app.use(sessionMiddleware);
@@ -28,12 +28,16 @@ const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
 const updateRouter = require("./routes/update");
 const dashboardRouter = require("./routes/dashboard");
+const coursesRouter = require("./routes/courses");
  
 app.use("/", indexRouter);
 app.use("/register", registerRouter);
 app.use("/login",  loginRouter);
 app.use("/update", updateRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/dashboard/tutors", dashboardRouter);
+app.use("/courses", coursesRouter);
+app.use("/courses/math", coursesRouter);
 
 app.locals.users = {};
 
@@ -43,12 +47,8 @@ io.use(wrap(sessionMiddleware));
 // Listen for socket events
 io.on("connection", (socket) => {
 
-
-    console.log("Socket connect: ", socket.id);
-
     // Check if user is logged in
     if(app.locals.currentUserId > 0){
-        console.log("user is logged in at the moment");
 
         // Save current socket id
         app.locals.currentSocketId = socket.id;
@@ -56,21 +56,12 @@ io.on("connection", (socket) => {
         // Bind and save current user id and socket id
         app.locals.users[app.locals.currentSocketId] = socket.request.session.currentUserId;
 
-        console.log(app.locals.users);
         socket.emit("updateUsers", app.locals.users);
-
-        // Get session id
-        // console.log("Session shit is: ", socket.request.session.currentUserId);
     }
 
     // Disconnect socket
     socket.on("disconnect", () => {
-        console.log("bye, ", socket.id);
-
         delete app.locals.users[socket.id];
-
-        console.log(app.locals.users);  
-
         socket.emit("updateUsers", app.locals.users);
     });
 

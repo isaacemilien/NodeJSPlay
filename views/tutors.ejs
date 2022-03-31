@@ -1,6 +1,10 @@
 <!-- Header -->
 <%- include("./partials/header") %>
 
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+
 <section id="profileOverview">
     <div class="container">
         <div class="row">
@@ -32,6 +36,7 @@
                 Chats
               </button>
             </li>
+      
             <li class="mb-1">
               <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
                 Account
@@ -49,18 +54,41 @@
         </div>
         
       </div>
-      <div class="col">
-        <h2>My courses</h2>
-        <% for(i = 0; i < Object.keys(currentUserCourses).length; i++){ %>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title"><%= Object.keys(currentUserCourses)[i] %> </h5>
-              <p class="card-text"><%= currentUserCourses[Object.keys(currentUserCourses)[i]] %></p>
-              <a href="/courses/<%=Object.keys(currentUserCourses)[i]%>" class="btn btn-primary">Continue</a>
-            </div>
+      <div class="col-xl-3 col-8">
+        <h2>My tutors</h2>
+        <div class="card">
+          <div class="card-body m-2">
+            <h5 class="card-title">Micheal Lawrence</h5>
+            <p class="card-text">Math Teacher</p>
+            <a href="/courses/math" class="btn btn-primary d-none d-xl-block">Chat</a>
           </div>
-        <% } %> 
+        </div>
       </div>
+      <div class="col-xl-6 d-none d-xl-block">
+        <h2>Chat with, ...</h2>
+        <!-- Message display -->
+        <div class="border" style="height:20em;">
+          <div class="bg-light">
+            hello
+          </div>
+          <div>
+            hi
+          </div>
+          <div class="bg-light">
+            hello
+          </div>
+        </div>
+        <!-- Message input -->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Message" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send</button>
+        </div>
+      </div>
+      
     </div>
   </div>
 </section>
+
+
+
+

@@ -1,26 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="/socket.io/socket.io.js"></script>
-    <script defer src="/js/clientSocket.js"></script>
-    <title>Document</title>
-</head>
-<body>
-    <h1>Register</h1>
-    <form method="post" id="form">
-        <label for="Username">Username</label><br>
-        <input type="text" name="username" required><br><br>
-        <label for="Password">Password</label><br>
-        <input type="text" name="password" required><br><br>
+<!-- Header -->
+<%- include('./partials/header') %>
 
-        <input type="submit" value="Create account">
-    </form><br>
-    <button onclick="window.location.href='Login'">
-        Login
-    </button>
+<!-- Login -->
+    <section id="login">
+        <div class="container">
+            <div class="row g-0 justify-content-center">
+                <!-- Info column -->
+                <div class="col-5 my-5 text-center text-md-start p-5 d-none d-lg-block">
+                    <h1>Register</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias labore quam possimus consequatur eos? Amet, fuga! Perspiciatis molestiae voluptatibus commodi?</p>
+                </div>
+                <!-- Input column -->
+                <div class="my-5 text-md-start p-5 col-lg-5">
+                    <form action="" method="post">
+                        <!-- Username -->
+                        <div>
+                            <span>Username</span>
+                            <input type="text" name="username" class="form-control my-2" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <!-- Password input -->
+                        <div class="my-2">
+                            <span >Password</span>
+                            <input type="password" name="password" class="form-control my-2" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="d-grid gap-2">
+                            <input class="btn btn-primary" type="submit" value="Create account">
+                        </div>
+                        <!-- Create account? -->
+                        <div class="text-center my-2">
+                            <a href="/login">Log in?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</body>
-</html>
+<!-- Footer -->
+<%- include('./partials/footer') %>

@@ -1,24 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script defer src="/socket.io/socket.io.js"></script>
-    <script defer src="/js/clientSocket.js"></script>
-</head>
-<body>
-    <h1>This is the home page</h1>
+<!-- Header -->
+<%- include('./partials/header') %>
 
-    <form action="" id="form">
-        <input id="input" autocomplete="off" /><button>Send</button>
-    </form><br>
-    <button onclick="window.location.href='Login'">
-        Login
-    </button><br><br>
-    <button onclick="window.location.href='register'">
-        Create account
-    </button>
-</body>
-</html>
+<section id="mission">
+    <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6 d-none d-lg-block">
+            <img src="/imgs/student.jpeg" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Quality education, for everyone</h1>
+            <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam beatae quae nihil, veritatis vitae officiis, odit quidem dolores odio hic molestiae reiciendis minima eaque? Quidem atque rerum nesciunt asperiores minus?</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="window.location.href='/courses'">Courses</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+<!-- Footer -->
+<%- include('./partials/footer') %>

@@ -13,8 +13,6 @@ socket.on("connect", () => {
 
 var users;
 
-var fuck = "dslfjsdf";
-
 socket.on("updateUsers", (arg) => {
     users = arg;
     console.log(users);
